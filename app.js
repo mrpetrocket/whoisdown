@@ -3,24 +3,29 @@ const client = new Discord.Client();
 const config = require('config');
 const sanitizer = require('sanitizer');
 const util = require('util');
+const logger = require('./logger');
+
+logger.info(util.format("whoisdown version %s", config.get('version')));
 
 client.on('ready', () => {
-    console.log("I am ready!");
+    logger.debug('ready!');
 });
 
 client.on('message', message => {
     if (isOurMessage(message)) {
-        console.log("Somebody typed /whoisdown");
-        let gameName = getGameName(message), reply ="", requestorMention=message.author.toString();
+        logger.silly(message.content);
+        let gameName = getGameName(message), reply ="";
         if (gameName === "") {
-            console.log("generic multiplayer request");
-            reply = util.format("%s, %s is interested in multiplayer - anybody down?", config.get('recipients'), requestorMention);
+            logger.debug(util.format("%s wants to play multiplayer", message.author.username));
+            reply = getGenericMultiplayerResponse(message.author);
         } else {
-            console.log(util.format("request to play %s", gameName));
-            reply = util.format("%s, %s wants to play %s - anybody down?", config.get('recipients'), requestorMention, gameName);
+            logger.debug(util.format("%s wants to play %s", message.author.username, gameName));
+            reply = getSpecificMultiplayerResponse(message.author, gameName);
         }
-
         message.channel.sendMessage(reply);
+
+        // remove original message
+        message.delete(config.get('deleteDelay'));
     }
 });
 
@@ -52,4 +57,23 @@ function getGameName(message) {
     } else {
         return "";
     }
+}
+
+/**
+ * Bot sends this message in response to /whoisdown with no game argument
+ * @param {User} requestor
+ * @returns {string}
+ */
+function getGenericMultiplayerResponse(requestor) {
+    return util.format("%s, %s is interested in multiplayer - anybody down?", config.get('recipients'), requestor.toString());
+}
+
+/**
+ * Bot sends this message in response to /whoisdown {game}
+ * @param {User} requestor
+ * @param {string} game
+ * @returns {string}
+ */
+function getSpecificMultiplayerResponse(requestor, game) {
+    return util.format("%s, %s wants to play **%s** - anybody down?", config.get('recipients'), requestor.toString(), game);
 }

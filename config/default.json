@@ -1,5 +1,8 @@
 {
   "commandPrefix": "/whoisdown",
+  "deleteDelay": 500,
+  "logLevel": "debug",
   "recipients": "@everyone",
-  "token": "MjcyMzkxNDAxOTk4OTA5NDQx.C2UeSQ.R_kvNJY3AhUhRP9y0yEwt2Qwaeo"
+  "token": "MjcyMzkxNDAxOTk4OTA5NDQx.C2UeSQ.R_kvNJY3AhUhRP9y0yEwt2Qwaeo",
+  "version": "1.0"
 }
