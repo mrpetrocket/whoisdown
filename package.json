@@ -1,0 +1,15 @@
+{
+  "name": "whoisdown",
+  "version": "1.0.0",
+  "description": "\"wants to play\" discord chat bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^1.24.0",
+    "discord.js": "^11.0.0"
+  }
+}
