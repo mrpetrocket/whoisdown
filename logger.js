@@ -1,12 +1,14 @@
 const config = require('config');
-const winston = require('winston');
+const { createLogger, format, transports } = require('winston');
 
-module.exports = new winston.Logger({
+module.exports = createLogger({
+    level: config.get('logLevel'),
     transports: [
-        new winston.transports.Console({
-            level: config.get('logLevel'),
-            // I may or may not have added a third party logger just to get colors
-            colorize: true
-        })
-    ]
+        new transports.Console({
+            format: format.combine(
+                format.colorize(),
+                format.simple(),
+            ),        
+        }),
+    ],
 });

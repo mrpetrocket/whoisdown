@@ -4,8 +4,13 @@ const config = require('config');
 const sanitizer = require('sanitizer');
 const util = require('util');
 const logger = require('./logger');
+const pjson = require('./package.json');
 
-logger.info(util.format("whoisdown version %s", config.get('version')));
+logger.info(util.format("whoisdown version %s", pjson.version));
+
+if (config.get('token') === 'SET_IN_LOCAL_YML') {
+    throw new Error('App token not set. Did you follow the First Time Setup instructions in README.md?');
+}
 
 client.on('ready', () => {
     logger.debug('ready!');
@@ -22,10 +27,12 @@ client.on('message', message => {
             logger.debug(util.format("%s wants to play %s", message.author.username, gameName));
             reply = getSpecificMultiplayerResponse(message.author, gameName);
         }
-        message.channel.sendMessage(reply);
+        message.channel.send(reply);
 
         // remove original message
-        message.delete(config.get('deleteDelay'));
+        message.delete({
+            timeout: config.get('deleteDelay'),
+        });
     }
 });
 

@@ -1,0 +1,8 @@
+---
+    commandPrefix: /whoisdown
+    # deleteDelay: delay in ms between when user types /whoisdown and when we replace their message with our formatted message.
+    deleteDelay: 500
+    logLevel: debug
+    recipients: 
+      '@everyone'
+    token: SET_IN_LOCAL_YML
