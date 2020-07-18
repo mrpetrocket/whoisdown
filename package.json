@@ -1,9 +1,10 @@
 {
   "name": "whoisdown",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "\"wants to play\" discord chat bot",
   "main": "app.js",
   "scripts": {
+    "start": "node app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -20,6 +21,6 @@
     "discord.js": "^12.2.0",
     "js-yaml": "^3.14.0",
     "sanitizer": "^0.1.3",
-    "winston": "^3.2.1"
+    "winston": "^3.3.3"
   }
 }
